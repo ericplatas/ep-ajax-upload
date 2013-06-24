@@ -5,3 +5,5 @@ Diferente de outros plugins do tipo, a ideia do Ep AjaxUpload é ser simples de 
 O AjaxUpload é apenas o primeiro plugin da biblitoteca EP que irei desenvolver e disponibilizar daqui para frente.
 
 Toda ajuda é bem vinda!  :)
+
+Veja mais sobre esse e outros projetos em http://www.ericplatas.com.br
