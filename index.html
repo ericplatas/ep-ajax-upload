@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<head>
+<html lang="pt-br">
+<meta charset="utf-8" />
+<title>Plugin jQuery HTML5Upload</title>
+<link href="style.css" rel="stylesheet" type="text/css">
+<script src="http://localhost/jquery/jquery.js"></script>
+<script src="jquery.epAjaxUpload.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function(){
+	$("#exemplo1").epAjaxUpload({
+		success: function(data){
+			$("#rst-1").append('<p class="epAjaxUpload-success">Upload completo com sucesso!</p>');
+			console.log('epAjaxupload return: ' + data);
+		},
+		error: function(msgError){
+			$("#rst-1").append('<p class="epAjaxUpload-error">Desculpe, ocorreu um erro ao fazer upload!</p>');
+			console.log('epAjaxupload error: ' + msgError);
+		}
+	});
+	
+	$("#exemplo2").epAjaxUpload({
+		progressBar: "#progressbar .progressbar-loaded",
+		progressCounter: "#progressbar .progressbar-label",
+		success: function(data){
+			$("#rst-2").append('<p class="epAjaxUpload-success">Upload completo com sucesso!</p>');
+			console.log('epAjaxupload return: ' + data);
+		},
+		error: function(msgError){
+			$("#rst-2").append('<p class="epAjaxUpload-error">Desculpe, ocorreu um erro ao fazer upload!</p>');
+			console.log('epAjaxupload error: ' + msgError);
+		}
+	});
+});
+</script>
+</head>
+
+<body>
+<div id="wrapper">
+	<header id="header">
+    	<h1>Plugin jQuery HTML5Upload</h1>
+    </header>
+    
+    <article id="main">
+    	<h2>Exemplo 1 - Tag &lt;progress&gt;</h2>
+        <form enctype="multipart/form-data" id="exemplo1">
+            <input name="arquivo[]" type="file" multiple />
+            <input type="submit" value="Upload" />
+        </form>
+        <div id="rst-1"></div>
+        
+        <h2>Exemplo 2 - Barra personalizada</h2>
+        <form enctype="multipart/form-data" id="exemplo2">
+            <input name="arquivo[]" type="file" multiple />
+            <input type="submit" value="Upload" />
+        </form>
+        
+        <div id="progressbar">
+            <div class="progressbar-label"><span>0</span>%</div>
+            
+            <div class="progressbar-loaded">
+            </div>
+        </div>
+        <div id="rst-2"></div>
+    </article>
+    
+    <footer id="footer">
+    	<address>
+        	<p>jQuery EP AjaxUpload &copy;2013 - Free for use under MIT license</p>
+            <p>Powered by <a href="http://www.ericplatas.com.br">Eric Platas</a></p>
+    </footer>
+</div>
+</body>
+</html>
