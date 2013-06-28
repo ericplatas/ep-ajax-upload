@@ -12,10 +12,8 @@
             // Configurações padrão.
 			progressBar: null,
 			progressCounter: null,
-            success: function(data){
-				$("#rst").append('<p class="epAjaxUpload-success">Upload completo com sucesso!</p>');
-				console.log('epAjaxupload return: ' + data);
-			},
+            bootstrap: false,
+            success: null,
 			error: function(msgError){
 				$("#rst").append('<p class="epAjaxUpload-error">Desculpe, ocorreu um erro ao fazer upload!</p>');
 				console.log('epAjaxupload error: ' + msgError);
@@ -25,7 +23,7 @@
 		var parentSelector = this;
 		
 		if(!settings.progressBar && !settings.progressCounter) {
-			parentSelector.append('<progress></progress>');
+			$('<progress></progress>').insertAfter(parentSelector);
 		}
 		
 		var progressHandlingFunction = function(e){
@@ -67,8 +65,16 @@
 				},
 				success: function(data){
 					for (var i = 0; i < data.length; i++){
-						if(data[i]['status'] == 1){
-							settings.success(data[i]['filename']);
+						if(data[i]['status'] == 'success'){
+							if(settings.success){
+                                settings.success(data[i]['filename']);
+                            } else if(settings.bootstrap){
+                                $("#rst").append('<div class="alert"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Warning!</strong> Best check yo self, you\'re not looking too good.</div>');
+                                console.log('epAjaxupload return: ' + data);
+                            } else {
+                                $("#rst").append('<p class="epAjaxUpload-success">Upload completo com sucesso!</p>');
+                                console.log('epAjaxupload return: ' + data);
+                            }
 						} else {
 							settings.error(data[i]['msgerror']);
 						}
