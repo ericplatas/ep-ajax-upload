@@ -22,14 +22,14 @@
 		
 		var parentSelector = this;
 		
-		if(!settings.progressBar && !settings.progressCounter) {
+		if(!settings.progressBar && !settings.progressCounter && settings.bootstrap == false) {
 			$('<progress></progress>').insertAfter(parentSelector);
 		}
 		
 		var progressHandlingFunction = function(e){
 			if(e.lengthComputable){
 				if(settings.progressBar){
-					$(settings.progressBar).css({ width: Math.round((e.loaded / e.total) * 200) });
+					$(settings.progressBar).css({ width: Math.round((e.loaded / e.total) * 100) + '%' });
 				}
 				
 				if(settings.progressCounter){
@@ -37,8 +37,9 @@
 				} 
 				
 				
+				
 				if(!settings.progressBar && !settings.progressCounter) {
-					parentSelector.find('progress').attr({value:e.loaded,max:e.total});
+					$('progress').attr({value:e.loaded,max:e.total});
 				}
 			}
 		}		
@@ -61,6 +62,18 @@
 				},
 				//Ajax events
 				beforeSend: function(){
+					if(settings.progressBar){
+						$(settings.progressBar).css({ width: '0%' });
+					}
+					
+					if(settings.progressCounter){
+						$(settings.progressCounter).html('0');
+					} 
+
+					if(!settings.progressBar && !settings.progressCounter) {
+						parentSelector.find('progress').attr({value:e.loaded,max:e.total});
+					}
+					
 					console.log("Enviando");
 				},
 				success: function(data){
@@ -69,7 +82,7 @@
 							if(settings.success){
                                 settings.success(data[i]['filename']);
                             } else if(settings.bootstrap){
-                                $("#rst").append('<div class="alert"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Warning!</strong> Best check yo self, you\'re not looking too good.</div>');
+                                $("#rst").append('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Sucesso!</strong> Upload completo com sucesso.</div>');
                                 console.log('epAjaxupload return: ' + data);
                             } else {
                                 $("#rst").append('<p class="epAjaxUpload-success">Upload completo com sucesso!</p>');
